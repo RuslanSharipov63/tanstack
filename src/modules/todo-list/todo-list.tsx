@@ -7,7 +7,7 @@ export function TodoList() {
   const [page, setPage] = useState(1);
 
   const { data: todoItems, error, isPending } = useQuery({
-    queryKey: ["tasks", "list"],
+    queryKey: ["tasks", "list", {page}],
     queryFn: meta => todoListApi.getTodoList({ page }, meta)
   });
 
@@ -37,7 +37,7 @@ export function TodoList() {
           prev
         </button>
         <button
-          onClick={() => setPage(p => Math.max(p + 1, todoItems.pages))}
+          onClick={() => setPage(p => Math.min(p + 1, todoItems.pages))}
           className="p-3 rounded border border-teal-500"
         >
           next
